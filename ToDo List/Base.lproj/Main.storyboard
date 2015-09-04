@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
-        <!--Event List-->
+        <!--Main TargetVC-->
         <scene sceneID="yaN-3y-jgS">
             <objects>
                 <tableViewController id="mra-jO-HwT" customClass="MainTargetVC" sceneMemberID="viewController">
@@ -39,7 +39,8 @@
                             <outlet property="delegate" destination="mra-jO-HwT" id="OIX-Ha-B8T"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Event List" id="0oV-4p-gTN">
+                    <navigationItem key="navigationItem" id="0oV-4p-gTN">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="uXr-Z1-DNx"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="6PM-DO-CYr">
                             <connections>
                                 <segue destination="vXZ-lx-hvc" kind="push" id="XbX-aq-SIK"/>
