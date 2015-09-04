@@ -19,6 +19,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    NSArray *array = [[UIApplication sharedApplication] scheduledLocalNotifications];
+    self.arrayEvents = [[NSMutableArray alloc]initWithArray:array];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ReloadTableViewWhenNewEvent) name:@"newEvent" object:nil];
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -31,13 +35,21 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void) viewWillAppear:(BOOL)animated{
+-(void) dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+-(void) ReloadTableViewWhenNewEvent {
     
+    [self.arrayEvents removeAllObjects];
     NSArray *array = [[UIApplication sharedApplication] scheduledLocalNotifications];
     self.arrayEvents = [[NSMutableArray alloc]initWithArray:array];
-    
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+    
+    
 }
+
+
 #pragma mark - Table view data source
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -78,25 +90,28 @@
 }
 
 
-/*
-// Override to support conditional editing of the table view.
+
+
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
+    
     return YES;
 }
-*/
 
-/*
-// Override to support editing the table view.
+
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
+       
+        UILocalNotification *notification = [self.arrayEvents objectAtIndex:indexPath.row];
+        [[UIApplication sharedApplication] cancelLocalNotification:notification];
+        [self.arrayEvents removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
+
 }
-*/
+
 
 /*
 // Override to support rearranging the table view.
