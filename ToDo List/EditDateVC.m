@@ -25,15 +25,15 @@
     [super viewDidLoad];
     if (self.isDetail) {
         self.noteText.text = self.infoResult;
-        self.datePicker.date = self.dateResult;
+       [self performSelector:@selector(SetDatePickerWithAnimation) withObject:nil afterDelay:0.5];
         self.noteText.userInteractionEnabled = NO;
         self.saveBtn.alpha = 0;
         self.datePicker.userInteractionEnabled = NO;
         
     }
     else{
-    self.dateResult = self.datePicker.date;
-    
+        
+        
     [self.saveBtn addTarget:self action:@selector(saveDate) forControlEvents:UIControlEventTouchUpInside];
    
     [self.datePicker addTarget:self action:@selector(dateValueChange) forControlEvents:UIControlEventValueChanged];
@@ -44,8 +44,14 @@
     
     self.datePicker.minimumDate = [NSDate date];
     
-    self.saveBtn.userInteractionEnabled = false;
+    self.saveBtn.userInteractionEnabled = NO;
     }
+}
+
+-(void) SetDatePickerWithAnimation{
+    
+    [self.datePicker setDate:self.dateResult animated:YES];
+    
 }
 
 -(void)saveDate{
